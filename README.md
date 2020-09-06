@@ -31,3 +31,15 @@
 
     * TodoHead.js : 투두 리스트의 상단에 있는 오늘 날짜, 요일, 남은 할 일 개수를 포함하는 UI 컴포넌트
 
+<br>
+
+## 👩🏻‍💻 Coding Convension
+
+* Add Codes : 코드를 추가했을 경우
+
+* Refactor Codes : 기존의 코드를 수정했을 경우
+
+* Fix Bugs : 버그를 고쳤을 경우
+
+* Update Readme : 리드미 파일을 수정했을 경우
+
