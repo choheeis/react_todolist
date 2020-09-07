@@ -166,4 +166,4 @@
 
 ## 👩🏻‍💻 프로젝트 결과
 
-![todolist](https://user-images.githubusercontent.com/31889335/92373767-ca702b00-f139-11ea-852b-12cdec4fde8d.gif)
+![todolist_gif](https://user-images.githubusercontent.com/31889335/92374094-3fdbfb80-f13a-11ea-9589-ba3ef584a525.gif)
