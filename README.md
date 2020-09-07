@@ -25,6 +25,38 @@
 
 <br>
 
+## 👩🏻‍💻 Coding Convension
+
+* Add Codes : 코드를 추가했을 경우
+
+* Refactor Codes : 기존의 코드를 수정했을 경우
+
+* Fix Bugs : 버그를 고쳤을 경우
+
+* Update Readme : 리드미 파일을 수정했을 경우
+
+<br>
+
+## 👩🏻‍💻 프로젝트 구조
+
+* __src/components 폴더__
+
+    UI 컴포넌트들을 저장하고 있는 폴더
+
+    * TodoTemplate.js : 투두 리스트의 가장 아래에 깔리는 흰색 박스 UI 컴포넌트
+
+    * TodoHead.js : 투두 리스트의 상단에 있는 오늘 날짜, 요일, 남은 할 일 개수를 포함하는 UI 컴포넌트
+
+    * TodoList.js : 투두 리스트의 각 아이템이 포함될 영역 UI 컴포넌트
+
+    * TodoItem.js : 투두 아이템 UI 컴포넌트
+
+    * TodoCreate.js : 투두 아이템 생성하는 부분 UI 컴포넌트
+
+    * TodoContext.js : 투두리스트 기능들이 구현될 수 있도록 상태 업데이트를 하는 부분
+
+<br>
+
 ## 👩🏻‍💻 React에서 사용되는 것들
 
 * __useState라는 Hook을 통해 동적(사용자의 입력에 따라 바뀌는 것)으로 상태 업데이트하기__
@@ -132,27 +164,6 @@
 
 <br>
 
-## 👩🏻‍💻 프로젝트 구조
+## 👩🏻‍💻 프로젝트 결과
 
-* __components 폴더__
-
-    UI 컴포넌트들을 저장하고 있는 폴더
-
-    * TodoTemplate.js : 투두 리스트의 가장 아래에 깔리는 흰색 박스 UI 컴포넌트
-
-    * TodoHead.js : 투두 리스트의 상단에 있는 오늘 날짜, 요일, 남은 할 일 개수를 포함하는 UI 컴포넌트
-
-    * TodoList.js : 투두 리스트의 각 아이템이 포함될 영역 UI 컴포넌트
-
-<br>
-
-## 👩🏻‍💻 Coding Convension
-
-* Add Codes : 코드를 추가했을 경우
-
-* Refactor Codes : 기존의 코드를 수정했을 경우
-
-* Fix Bugs : 버그를 고쳤을 경우
-
-* Update Readme : 리드미 파일을 수정했을 경우
-
+![todolist](https://user-images.githubusercontent.com/31889335/92373767-ca702b00-f139-11ea-852b-12cdec4fde8d.gif)
