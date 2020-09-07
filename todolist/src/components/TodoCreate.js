@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from "react-icons/md";
+import { useTodoDispatch, useTodoNextId } from './TodoContext';
 
 const CirCleButtonStyle = styled.button`
     width: 80px;
@@ -63,7 +64,7 @@ const InsertFormLocationStyle = styled.div`
     left: 0;
 `;
 
-const InsertFormBackgroundStyle = styled.div`
+const InsertFormBackgroundStyle = styled.form`
     padding: 32px;
     padding-bottom: 72px;
 
@@ -89,16 +90,42 @@ const InsertInputStyle = styled.input`
 function TodoCreate() {
     // TodoCreate는 상태 관리 필요 (입력창을 열기/닫기 두 가지 상태가 있으므로)
     const [open, setOpen] = useState(false); // 초기값 false
+    const [value, setValue] = useState('');
+    const dispatch = useTodoDispatch();
+    const nextId = useTodoNextId();
     // onToggle 이라는 함수는 open의 값을 반전시켜줌
     const onToggle = () => {
         setOpen(!open);
     }
+    // event 객체를 가져와서 
+    const onChange = (e) => {
+        setValue(e.target.value);
+    }
+    const onSummit = (e) => {
+        // Enter 눌렀을 때 새로고침 방지
+        e.preventDefault();
+        dispatch({
+            type: 'CREATE',
+            todo: {
+                id: nextId.current,
+                text: value,
+                done: false
+            }
+        })
+
+        // 다음 투두 리스트 추가할 수 있게 다시 초기화해줌
+        setValue('');
+        setOpen(false);
+        nextId.current += 1;
+    }
+    
+    
     return(
         <>
             {open && 
                 <InsertFormLocationStyle>
-                    <InsertFormBackgroundStyle>
-                        <InsertInputStyle placeholder="할 일을 입력 후, Enter를 눌러주세요" autoFocus />
+                    <InsertFormBackgroundStyle onSubmit={onSummit}>
+                        <InsertInputStyle onChange={onChange} value={value} placeholder="할 일을 입력 후, Enter를 눌러주세요" autoFocus />
                     </InsertFormBackgroundStyle>
                 </InsertFormLocationStyle>
             }
