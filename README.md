@@ -92,6 +92,44 @@
 
     __주석 4 )__ dispatch 라는 함수 안의 type에 MyReducer 에서 상태 업데이트 조건으로 작성했던 조건을 적어준다.
 
+    <br>
+
+* __context API 사용하기__
+
+    context API는 약간 전역변수 느낌으로 사용한다고 생각하면 된다.
+
+    ~~~javascript
+    // 1. react로부터 createContext, useContext 함수 import 하기
+    import { createContext, useContext } from 'react';
+
+    // 2. context를 사용하기 위해 선언하기(createContext 함수 사용)
+    const MyContext = createContext('defaultValue');
+
+    // 3. 선언한 context 사용하기(useContext 함수 사용)
+    const test = useContext(MyContext);
+    ~~~
+
+    __주석 3 )__ test 변수에는 MyContext 에서 저장하고 있는 문자열 defaultValue가 저장된다.
+
+    이 defaultValue 라는 값을 동적으로 변경하고 싶다면 Context 안에 존재하는 Provider 이라는 컴포넌트를 사용해야 한다.
+
+    아래 코드는 위 코드와 이어지는 코드이다.
+
+    ~~~javascript
+    import { createContext, useContext } from 'react';
+
+    const MyContext = createContext('defaultValue');
+
+    const test = useContext(MyContext);
+
+    function ContextExample() {
+        return(
+            // test 변수에 Kimchohee가 저장됨
+            <MyContext.Provider value="Kimchohee"></MyContext.Provider>
+        )
+    }
+    ~~~
+
 <br>
 
 ## 👩🏻‍💻 프로젝트 구조

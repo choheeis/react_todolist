@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer, createContext, useContext, useRef } from 'react';
 
 const initTodos = [
     {
@@ -34,27 +34,70 @@ const initTodos = [
 * TOGGLE
 * REMOVE
 */
-// reducer 함수 인자로 받은 action의 type에 따라 첫 번째 인자의 state를 수정하여 return 해줌
 function TodoReducer(state, action) {
     switch (action.type) {
         case 'CREATE' :
+            // action 안에 todo 항목을 넣어서 디스패치해줌
             return state.concat(action.todo);
         case 'TOGGLE' :
+            // 모든 투두 항목에 대하여 상태를 업데이트해줌
             return state.map(
+                // 아래 코드는 삼항 연산자임
+                // 투두 id가 action으로 받아온 id랑 같다면 해당 투두의 done 값을 반전시켜줌
                 todo => todo.id === action.id ? { ...todo, done: !todo.done } : todo
             )
         case 'REMOVE' :
+            // 모든 투두 항목들에 대하여 투두 id랑 action으로 받아온 id랑 일치하지 않는 것들만 가져옴
             return state.filter(todo => todo.id !== action.id);
         default:
-            throw new Error(`Unhandled action type: ${action.type}`);
+            throw new Error('Unhandled action type');
     }
 }
 
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
+const TodoNextIdContext = createContext();
 
-export function TodoProvider({ children }) {
-    // 위에서 선언한 TodoReducer 함수를 React의 Reducer로 사용
-    const [state, dispatch] = useReducer(todoReducer, initTodos);
-    return children;
+export function TodoContext({ children }) {
+    // todoReducer 사용을 위한 선언
+    const [state, dispatch] = useReducer(TodoReducer, initTodos);
+    const nextId = useRef(6);
+
+    return (
+        <TodoStateContext.Provider value={state}>
+            <TodoDispatchContext.Provider value={dispatch}>
+                <TodoNextIdContext.Provider value={nextId}>
+                    {children}
+                </TodoNextIdContext.Provider>
+            </TodoDispatchContext.Provider>
+        </TodoStateContext.Provider>  
+    );
+}
+
+// 다른 파일에서도 이 파일에서 만든 Context 값을 사용할 수 있게 하기 위함
+export function useTodoState() {
+    const context = useContext(TodoStateContext);
+    // 예외처리
+    if(!context) {
+        throw new Error('Cannot find TodoProvider');
+    }
+    return context;
+}
+
+export function useTodoDispatch() {
+    const context = useContext(TodoDispatchContext);
+    // 예외처리
+    if(!context) {
+        throw new Error('Cannot find TodoProvider');
+    }
+    return context;
+}
+
+export function useTodoNextId() {
+    const context = useContext(TodoNextIdContext);
+    // 예외처리
+    if(!context) {
+        throw new Error('Cannot find TodoProvider');
+    }
+    return context;
 }
