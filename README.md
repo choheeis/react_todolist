@@ -15,6 +15,8 @@
 
     `yarn add styled-components`
 
+    https://react-icons.github.io/ --> 이 라이브러리에서 사용할 수 있는 icon들을 볼 수 있는 사이트
+
 * react-icons library 설치하기 (icon 관련 라이브러리)
 
     `yarn add react-icons`
@@ -30,6 +32,8 @@
     * TodoTemplate.js : 투두 리스트의 가장 아래에 깔리는 흰색 박스 UI 컴포넌트
 
     * TodoHead.js : 투두 리스트의 상단에 있는 오늘 날짜, 요일, 남은 할 일 개수를 포함하는 UI 컴포넌트
+
+    * TodoList.js : 투두 리스트의 각 아이템이 포함될 영역 UI 컴포넌트
 
 <br>
 
