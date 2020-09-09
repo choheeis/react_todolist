@@ -162,8 +162,139 @@
     }
     ~~~
 
+    <br>
+
+* __useEffect라는 Hook을 사용하여 컴포넌트가 화면에 나타날 시점과 사라지는 시점에 작업하기__
+
+    ~~~javascript
+    // 1. react로 부터 useEffect import 하기
+    import React, { useEffect } from 'react';
+
+    // 2. Test라는 컴포넌트 함수 작성하기
+    function Test() {
+        // 3. useEffect 함수 작성하기
+        useEffect(() => {
+            console.log('컴포넌트가 화면에 나타남');
+            
+            return () => {
+                console.log('컴포넌트가 화면에서 사라짐');
+            }
+        }, [])
+
+        return(
+            <></>
+        )
+    }
+
+    export default Test;
+    ~~~
+
+    __주석 3)__ useEffect 함수는 2개의 인자를 가진다. 첫 번째 인자에는 useEffect 함수가 실행될 때 해줘야 하는 작업을 함수 형태로 작성해주면 된다.
+
+    두 번째 인자에는 useEffect 함수가 실행될 때 의존되는 값들을 적어주는 곳인데 의존되는 값이 없을 때는 빈 배열인 []를 작성해준다.
+
+    useEffect의 return 값으로는 컴포넌트가 화면에서 사라질 때 실행될 작업을 함수 형태로 작성해주면 된다.
+
 <br>
 
 ## 👩🏻‍💻 프로젝트 결과
 
 ![todolist_gif](https://user-images.githubusercontent.com/31889335/92374094-3fdbfb80-f13a-11ea-9589-ba3ef584a525.gif)
+
+<br>
+
+## 👩🏻‍💻React에서 API 호출하기 
+
+이 투두리스트 프로젝트에서는 서버 호출하는 부분이 없지만 다른 프로젝트에서 사용할 것이므로 공부해 둠.
+
+* __Restful API를 호출할 때 사용하는 라이브러리인 axios를 설치한다.__
+
+    `yarn add axios`
+
+* __Restful API 호출을 연습해볼 API 제공 사이트__
+
+    https://jsonplaceholder.typicode.com/ 의 https://jsonplaceholder.typicode.com/users API를 사용해보자.
+
+* __컴포넌트에서 API 요청하기__
+
+    컴포넌트에서 API를 요청하는 가장 기본적인 방법은 React의 __useState__ 와 __useEffect__ 를 사용하는 것이다.
+
+* __API 호출시 관리해야 하는 3가지 상태__
+
+    1. 요청의 결과
+
+    2. 로딩 상태
+
+    3. 에러
+
+* __API 호출하기 위한 준비 상태__
+
+    ~~~javascript
+    // 1. react에서 useState, useEffect를 import 한다.
+    import React, { useState, useEffect } from 'react';
+    // 2. 설치한 axios 라이브러리를 import 한다.
+    import axios from 'axios';
+
+    function Users() {
+        // 3. API 호출시 관리해야 하는 3가지 상태를 useState를 사용해 선언한다.
+        const [users, setUsers] = useState(null);
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(null);
+
+        // 4. axios 를 사용한 api 호출 코드가 포함될 async 함수를 생성한다.
+        const fetchUsers = async() => {
+                try {
+                    // 5. API 호출 전 상태들 초기화
+                    setUsers(null);
+                    setError(null);
+                    setLoading(true);
+
+                    // 6. axios를 사용하여 API 호출 후, 받아온 응답 값(response.data)로 users 상태를 업데이트한다.
+                    const response = await axios.get(
+                        'https://jsonplaceholder.typicode.com/users'
+                    );
+                    setUsers(response.data);
+                } catch(e) {
+                    // 7. error 상태를 발생한 에러 내용으로 업데이트한다.
+                    console.log(e.response.status);
+                    setError(e);
+                }
+                // 8. 서버 호출이 완료되면 loading 상태 값을 false로 업데이트한다.
+                setLoading(false);
+            }
+
+        // 9. useEffect 함수를 작성하여 컴포넌트가 화면에 나타날 때 API 호출을 실행한다.
+        useEffect(() => {
+            // 10. 위에서 만든 fetchUsers 함수를 실행한다.
+            fetchUsers();
+        }, []);
+
+        // 11. 3가지 상태에 따른 return 값 작성하기
+        if (loading) return <div>로딩중</div>
+        if (error) return <div>에러 발생함</div>
+        if (!users) return <div>응답값이 없어요</div>
+
+        // 12. 응답 받은 데이터로 보여주고 싶은 UI 컴포넌트에 배치하기
+        return (
+            <ul>
+                {users.map(user => (
+                    <li key={users.id}>
+                        {user.username} ({user.name})
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+
+    export default Users;
+    ~~~
+
+    __주석 4)__ fetUsers(예시) 라는 async 함수를 만들고, 그 안에 try catch 문을 작성한다.
+
+    try 블럭 안에서 axios로 API 호출을 하고, catch 블럭 안에서 예외 처리를 해준다.
+
+    __주석 5)__ try 블럭 안에서 axios로 API 호출을 하기 전에 관리해야 할 3가지 상태를 초기화 해준다.
+
+    결과 값(users)과 에러 값(error)은 null로 초기화 해주고, 로딩 상태를 API 호출이 시작되었음을 나타내는 true로 초기화 해준다.
+
+    __주석 6)__ axios 를 사용해 해당 api를 호출하고 결과값 상태인 users에 응답받은 결과값인 response.data로 업데이트한다.
