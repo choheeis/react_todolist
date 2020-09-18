@@ -22,6 +22,10 @@
 * react-icons library 설치하기 (icon 관련 라이브러리)
 
     `yarn add react-icons`
+    
+* react-router-dom 설치하기 (route와 link 관련 라이브러리)
+
+    `yarn add react-router-dom`
 
 <br>
 
