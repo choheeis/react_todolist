@@ -65,6 +65,10 @@
 
 * __useState라는 Hook을 통해 동적(사용자의 입력에 따라 바뀌는 것)으로 상태 업데이트하기__
 
+    react의 가장 큰 장점이라고 할 수 있는 상태 업데이트! 
+    
+    상태가 변경될 때마다 감지하여 UI를 리렌더링한다.
+
     ~~~javascript
     // 1. useState 컴포넌트를 React 로 부터 import 하기
     import React, { useState } from 'react';
